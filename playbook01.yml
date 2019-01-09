@@ -1,0 +1,22 @@
+---
+- name: Windows-File-Server
+  hosts: Windows-Server
+  
+- tasks:
+  - name: Install FileServer
+  win_feature:
+    name: FS-FileServer
+    include_management_tools: yes
+    include_sub_features: yes
+    state: present
+ register: result
+ 
+ - name: Create FileShare
+   win_share:
+    name: Test_Share
+    description: test-file-shar
+    path: C:\shares\company
+    list: yes
+    full: Administrator
+    read: Global
+    change: DevOps
